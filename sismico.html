@@ -8,7 +8,7 @@
     </head>
     <body>
         <nav>
-            <h1><a href="index.html">NOMBRE APELLIDO</a></h1>
+            <h1><a href="index.html">EMIL GATICA</a></h1>
             <select onchange="location = this.value;">
                 <option value="index.html">INDEX</option>
                 <option value="integrantes.html">INTEGRANTES</option>
@@ -34,12 +34,17 @@
             async function temblores() {
                 const data = await fetch("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson");
                 datos = await data.json();
-                datos.features.forEach((t, i) => {
+               datos.features.forEach((t, i) => {
                     if (t.properties.place.includes("Chile") && t.properties.mag > 4.0) {
+                        if(t.properties.mag > 4.9){
+                        seccion.innerHTML += `<article><div><h3 style="color:pink">${t.properties.mag.toFixed(1)}</h3></div><div><p><a href="${t.properties.url}" target="_blank" rel="noopener noreferrer">${t.properties.place}</a> - ${registro(t.properties.time)}</p></div></article>`;
+                    } else {
                         seccion.innerHTML += `<article><div><h3>${t.properties.mag.toFixed(1)}</h3></div><div><p><a href="${t.properties.url}" target="_blank" rel="noopener noreferrer">${t.properties.place}</a> - ${registro(t.properties.time)}</p></div></article>`;
                     }
+
+                    }
                 });
-                cargador.style.display = "none";
+   
             }
             temblores().catch((error) => console.error(error));
 
